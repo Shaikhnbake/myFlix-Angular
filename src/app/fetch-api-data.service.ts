@@ -20,17 +20,27 @@ export class UserRegistrationService {
 
   //API call for user registration endpoint
   public userRegistration(userDetails: any): Observable<any> {
+    const token = localStorage.getItem('token');
     console.log(userDetails);
     return this.http
-      .post(apiUrl + 'users', userDetails)
+      .post(apiUrl + '/users', userDetails,
+      {headers: new HttpHeaders({ 
+        Authorization: 'Bearer ' + token, 
+      })}
+      )
       .pipe(catchError(this.handleError));
   }
 
   //API call for user login
   public userLogin(userDetails: any): Observable<any> {
+    const token = localStorage.getItem('token');
     console.log(userDetails);
     return this.http
-      .post(apiUrl + 'login', userDetails)
+      .post(apiUrl + '/login', userDetails,
+        {headers: new HttpHeaders({ 
+          Authorization: 'Bearer ' + token, 
+        })}
+      )
       .pipe(catchError(this.handleError));
   }
 
@@ -38,7 +48,7 @@ export class UserRegistrationService {
   getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + 'movies', 
+      .get(apiUrl + '/movies', 
         {headers: new HttpHeaders({ 
           Authorization: 'Bearer ' + token, 
         })
@@ -53,7 +63,7 @@ export class UserRegistrationService {
   getOneMovie(Title: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + 'movies' + Title, 
+      .get(apiUrl + '/movies' + Title, 
         {headers: new HttpHeaders({ 
           Authorization: 'Bearer ' + token, 
         })
@@ -68,7 +78,7 @@ export class UserRegistrationService {
   getDirector(directorName: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + 'movies' + 'director' + directorName, 
+      .get(apiUrl + '/movies' + '/director' + directorName, 
         {headers: new HttpHeaders({ 
           Authorization: 'Bearer ' + token, 
         })
@@ -83,7 +93,7 @@ export class UserRegistrationService {
   getGenre(genreName: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + 'movies' + 'genre' + genreName, 
+      .get(apiUrl + '/movies' + '/genre' + genreName, 
         {headers: new HttpHeaders({ 
           Authorization: 'Bearer ' + token 
         })
@@ -99,7 +109,7 @@ export class UserRegistrationService {
     const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + 'users' + username, 
+      .get(apiUrl + '/users' + username, 
         {headers: new HttpHeaders({
           Authorization: 'Bearer ' + token
         })
@@ -115,7 +125,7 @@ export class UserRegistrationService {
     const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + 'users' + username, 
+      .get(apiUrl + '/users' + username, 
         {headers: new HttpHeaders({
           Authorization: 'Bearer ' + token
         })
@@ -132,7 +142,7 @@ export class UserRegistrationService {
     const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
       return this.http
-        .post(apiUrl + 'users' + username + 'movies' + movieId,
+        .post(apiUrl + '/users' + username + '/movies' + movieId,
           { topMovies: movieId }, 
           { headers: new HttpHeaders({
             Authorization: 'Bearer ' + token
@@ -149,7 +159,7 @@ export class UserRegistrationService {
     const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
       return this.http
-        .delete(apiUrl + 'users' + username + 'movies' + movieId, 
+        .delete(apiUrl + '/users' + username + '/movies' + movieId, 
           { headers: new HttpHeaders({
             Authorization: 'Bearer ' + token
           })
@@ -165,7 +175,7 @@ export class UserRegistrationService {
     const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
       return this.http
-        .put(apiUrl + 'users' + username, newUserInfo, 
+        .put(apiUrl + '/users' + username, newUserInfo, 
           { headers: new HttpHeaders({
             Authorization: 'Bearer ' + token
           })
@@ -181,7 +191,7 @@ export class UserRegistrationService {
     const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
       return this.http
-        .delete(apiUrl + 'users' + username, 
+        .delete(apiUrl + '/users' + username, 
           { headers: new HttpHeaders({
             Authorization: 'Bearer ' + token
           })
